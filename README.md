@@ -4,6 +4,10 @@ AI Product Factory is an agent-native system for turning ambiguous AI product id
 
 **Current stage: V0.1 — Foundation.** This repository establishes the operating contracts, specialist skills, durable knowledge model, human approval gates, and evaluation philosophy. It is not production-ready and does not yet include a recruiter-facing application.
 
+## Current scope
+
+The current release focuses on the product-decision workflow: framing ambiguous ideas, challenging assumptions, defining evaluations, recording human approvals, and producing an EXPERIMENT, INVESTIGATE, or REJECT decision. Building production applications, recruiter-facing experiences, and runtime model integrations is outside the current scope.
+
 ## What this demonstrates
 
 - **Agent orchestration:** bounded Discovery, Critic, Eval, and Product Review responsibilities with explicit handoffs.
