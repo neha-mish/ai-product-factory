@@ -1,7 +1,7 @@
 # AnswerLens V0: Evaluation Result
 
 - **Date:** 2026-09-16
-- **Evaluated revision:** `592d3e0` plus this evidence update
+- **Evaluated application revision:** `6b4e0bd`
 - **Production URL:** https://answerlens-neha-mish.vercel.app
 
 ## Automated evidence

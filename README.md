@@ -4,7 +4,7 @@ AnswerLens is a time-boxed AI visibility experiment for B2B SaaS marketing teams
 
 **[Open the live prototype](https://answerlens-neha-mish.vercel.app)**
 
-The current pilot uses one consistent market-intent prompt across three AI experiences—OpenAI, Gemini, and Perplexity—to demonstrate the complete collection-to-analysis workflow. It is a directional pilot, not a representative market study.
+The current pilot uses one consistent market-intent prompt across three AI experiences—ChatGPT, Gemini, and Perplexity—to demonstrate the complete collection-to-analysis workflow. It is a directional pilot, not a representative market study.
 
 ## The problem
 
