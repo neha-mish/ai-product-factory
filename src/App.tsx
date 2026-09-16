@@ -111,7 +111,7 @@ export default function App() {
               <div>
                 <p className="eyebrow">Your dataset</p>
                 <h1>Bring the answers.<br />We’ll make the pattern visible.</h1>
-                <p className="lede">Paste a small set of AI answers. Analysis happens locally in your browser—no model calls, no data upload.</p>
+                <p className="lede">Paste a small set of AI answers. Analysis happens locally in your browser—no model calls, and your edits are not uploaded.</p>
               </div>
               <button className="secondary-button" onClick={() => { setDataset(cloneSample()); setSheetState('error'); setSheetError('Using the fictional fallback dataset.') }}>Restore sample</button>
             </div>
@@ -283,7 +283,7 @@ export default function App() {
         )}
       </main>
 
-      <footer><div className="footer-brand"><span className="logo"><Icon name="lens" /></span><div><strong>AnswerLens</strong><p>A four-hour product experiment by Neha Mishra.</p></div></div><p>Built to observe before assuming.<br />No runtime AI. No uploaded data.</p></footer>
+      <footer><div className="footer-brand"><span className="logo"><Icon name="lens" /></span><div><strong>AnswerLens</strong><p>A time-boxed product experiment by Neha Mishra.</p></div></div><p>Built to observe before assuming.<br />No runtime AI. Public read-only dataset.</p></footer>
 
       {methodOpen && <div className="modal-backdrop" role="presentation" onMouseDown={() => setMethodOpen(false)}><section className="method-modal" role="dialog" aria-modal="true" aria-labelledby="method-title" onMouseDown={(event) => event.stopPropagation()}><button className="modal-close" aria-label="Close method" onClick={() => setMethodOpen(false)}>×</button><p className="eyebrow">Method & limits</p><h2 id="method-title">Transparent by design.</h2><ol><li><b>Match named entities.</b><span>Whole-term, case-insensitive matching uses the brand names and aliases you provide.</span></li><li><b>Aggregate observations.</b><span>Mention rate, first mention, gap prompts, and visible URL domains are calculated only across complete supplied answers.</span></li><li><b>Keep the evidence attached.</b><span>Every aggregate can be inspected against its prompt and original answer.</span></li><li><b>Separate observation from hypothesis.</b><span>Investigation areas are questions to explore—not explanations, prescriptions, or predicted uplift.</span></li></ol><div className="modal-limit"><strong>What V0 deliberately does not do</strong><p>No live AI querying, sentiment analysis, semantic positioning, automatic competitor discovery, universal visibility score, or market-wide claims.</p></div><a href="https://github.com/neha-mish/ai-product-factory/tree/main/runs/2026-09-16-answerlens" target="_blank" rel="noreferrer">Read the product run <Icon name="arrow" /></a></section></div>}
     </div>
