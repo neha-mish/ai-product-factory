@@ -14,11 +14,12 @@
 | Mention rate and first-mention calculation | PASS | Hand-calculated fixture matches engine output. |
 | Target-absent competitor gaps | PASS | Expected gap row is classified correctly. |
 | Visible domain extraction | PASS | URLs are normalized and duplicate domains are removed per answer. |
-| Immediate sample path | PASS | Interface test confirms analyzed sample results render on first load. |
+| Published-data path | PASS | Interface test confirms the public experiment is parsed and rendered after loading. |
+| CSV integrity | PASS | Fixtures cover quoted multiline answers, metadata, aliases, and incomplete planned rows. |
 | Editable dataset path | PASS | Interface test confirms navigation to structured custom inputs. |
 | Production build | PASS | Type checking and Vite production build completed successfully. |
 
-Automated suite result: **6 tests passed across 2 files**.
+Automated suite result: **8 tests passed across 3 files**.
 
 ## Language and scope audit
 
@@ -27,7 +28,8 @@ Automated suite result: **6 tests passed across 2 files**.
 - AEO output is labeled “Investigation area—not a conclusion.”
 - The UI makes no causal explanation, guaranteed action, or predicted uplift claim.
 - Absence of visible URLs is described as “No extractable domains,” not “No citations.”
-- No API key, runtime model call, backend, authentication, or persistence is present.
+- No API key, runtime model call, backend credential, authentication, or private persistence is present.
+- The public Google Sheet is identified as a lightweight experiment feed; it is not presented as a private database.
 
 ## Pending human evaluation
 
@@ -40,5 +42,4 @@ The following approved checks require the human product owner and are not repres
 
 ## Current conclusion
 
-The prototype is technically ready for public review as a product experiment. It is not yet evidence of validated demand, representative market visibility, causal AEO diagnosis, or business impact.
-
+The prototype is technically ready for public review as a directional pilot. The current one-prompt, three-platform dataset demonstrates the workflow but is not evidence of validated demand, representative market visibility, causal AEO diagnosis, or business impact.
