@@ -10,12 +10,20 @@ export type AnswerRow = {
   prompt: string
   platform: string
   answer: string
+  model?: string
+  responseUrl?: string
+  collectedAt?: string
 }
 
 export type Dataset = {
   target: Brand
   competitors: Brand[]
   rows: AnswerRow[]
+  source?: {
+    kind: 'sample' | 'sheet' | 'manual'
+    label: string
+    url?: string
+  }
 }
 
 export type BrandMention = {
