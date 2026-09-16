@@ -2,7 +2,7 @@
 
 - **Date:** 2026-09-16
 - **Evaluated revision:** `592d3e0` plus this evidence update
-- **Production URL:** https://answerlens-neha-mish.neha-mish87.chatgpt.site
+- **Production URL:** https://answerlens-neha-mish.vercel.app
 
 ## Automated evidence
 

@@ -2,7 +2,7 @@
 
 AnswerLens is a four-to-five-hour product experiment that turns user-supplied AI answers into transparent brand-visibility observations.
 
-**[Open the live prototype](https://answerlens-neha-mish.neha-mish87.chatgpt.site)**
+**[Open the live prototype](https://answerlens-neha-mish.vercel.app)**
 
 It answers a deliberately narrow question: **given this set of AI answers, where did the target brand appear, which competitors appeared first, which prompts exposed target-absent gaps, and which visible source domains were present?**
 
