@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { analyzeDataset } from './analyze'
 import { sampleData } from './sampleData'
+import { loadPublishedSheet } from './sheetData'
 import type { AnswerRow, Brand, Dataset } from './types'
 
 const cloneSample = (): Dataset => JSON.parse(JSON.stringify(sampleData))
@@ -29,9 +30,27 @@ function Icon({ name }: { name: 'lens' | 'arrow' | 'check' | 'plus' | 'trash' | 
 
 export default function App() {
   const [dataset, setDataset] = useState<Dataset>(cloneSample)
+  const [sheetState, setSheetState] = useState<'loading' | 'loaded' | 'error'>('loading')
+  const [sheetError, setSheetError] = useState('')
   const [mode, setMode] = useState<'results' | 'input'>('results')
   const [sourceFilter, setSourceFilter] = useState<string>('all')
   const [methodOpen, setMethodOpen] = useState(false)
+
+  useEffect(() => {
+    let active = true
+    loadPublishedSheet()
+      .then((loaded) => {
+        if (!active) return
+        setDataset(loaded)
+        setSheetState('loaded')
+      })
+      .catch((error: unknown) => {
+        if (!active) return
+        setSheetError(error instanceof Error ? error.message : 'The published sheet could not be loaded.')
+        setSheetState('error')
+      })
+    return () => { active = false }
+  }, [])
 
   const analysis = useMemo(() => analyzeDataset(dataset), [dataset])
   const errors = {
@@ -94,7 +113,7 @@ export default function App() {
                 <h1>Bring the answers.<br />We’ll make the pattern visible.</h1>
                 <p className="lede">Paste a small set of AI answers. Analysis happens locally in your browser—no model calls, no data upload.</p>
               </div>
-              <button className="secondary-button" onClick={() => setDataset(cloneSample())}>Restore sample</button>
+              <button className="secondary-button" onClick={() => { setDataset(cloneSample()); setSheetState('error'); setSheetError('Using the fictional fallback dataset.') }}>Restore sample</button>
             </div>
 
             <div className="form-layout">
@@ -147,6 +166,7 @@ export default function App() {
                       <label>Platform<input value={row.platform} onChange={(event) => setRow(row.id, { platform: event.target.value })} placeholder="ChatGPT" /></label>
                       <label>Prompt<input value={row.prompt} onChange={(event) => setRow(row.id, { prompt: event.target.value })} placeholder="What would a prospect ask?" /></label>
                     </div>
+                    {(row.model || row.collectedAt || row.responseUrl) && <p className="row-provenance">{[row.model, row.collectedAt].filter(Boolean).join(' · ')}{row.responseUrl && <> · <a href={row.responseUrl} target="_blank" rel="noreferrer">Open original response</a></>}</p>}
                     <label>AI answer<textarea rows={5} value={row.answer} onChange={(event) => setRow(row.id, { answer: event.target.value })} placeholder="Paste the observed answer, including visible source URLs..." /></label>
                   </article>
                 ))}
@@ -170,9 +190,15 @@ export default function App() {
               </div>
               <div className="hero-note">
                 <span className="pulse-dot" />
-                <div><strong>Sample experiment loaded</strong><p>{analysis.rowCount} answers · {new Set(analysis.rows.map((row) => row.platform)).size} AI platforms · analyzed locally</p></div>
+                <div>
+                  <strong>{sheetState === 'loading' ? 'Loading published experiment…' : dataset.source?.kind === 'sheet' ? 'Real observed experiment loaded' : 'Fallback experiment loaded'}</strong>
+                  <p>{analysis.rowCount} answer{analysis.rowCount === 1 ? '' : 's'} · {new Set(analysis.rows.map((row) => row.platform)).size} AI platform{new Set(analysis.rows.map((row) => row.platform)).size === 1 ? '' : 's'} · analyzed locally</p>
+                  {dataset.source?.url && <a href={dataset.source.url} target="_blank" rel="noreferrer">View public dataset</a>}
+                </div>
               </div>
             </div>
+
+            {sheetState === 'error' && <div className="import-warning"><strong>Published sheet unavailable.</strong> <span>{sheetError} Showing the fallback dataset.</span></div>}
 
             {!valid ? (
               <div className="invalid-state">
@@ -237,10 +263,11 @@ export default function App() {
                     {visibleRows.map((row) => (
                       <details className="evidence-card" key={row.id}>
                         <summary>
-                          <div><span className="platform-tag">{row.platform || 'Unknown platform'}</span>{row.targetMissingWithCompetitor && <span className="gap-tag">Target absent</span>}<h3>{row.prompt}</h3></div>
+                          <div><span className="platform-tag">{row.platform || 'Unknown platform'}{row.model ? ` · ${row.model}` : ''}</span>{row.targetMissingWithCompetitor && <span className="gap-tag">Target absent</span>}<h3>{row.prompt}</h3></div>
                           <span className="summary-meta">{row.orderedBrandIds.length} tracked brand{row.orderedBrandIds.length === 1 ? '' : 's'} <span>+</span></span>
                         </summary>
                         <div className="evidence-body">
+                          {(row.collectedAt || row.responseUrl) && <div className="evidence-provenance"><span>{row.collectedAt ? `Collected ${row.collectedAt}` : 'Collection date not provided'}</span>{row.responseUrl && <a href={row.responseUrl} target="_blank" rel="noreferrer">Open original response <Icon name="arrow" /></a>}</div>}
                           <p>{row.answer}</p>
                           <div className="match-strip"><span>Observed order</span>{row.orderedBrandIds.length ? row.orderedBrandIds.map((id, index) => <b key={id}>{index + 1}. {brandName(id)}</b>) : <b>No tracked brands</b>}</div>
                           <div className="match-strip"><span>Visible domains</span>{row.domains.length ? row.domains.map((domain) => <b key={domain}>{domain}</b>) : <b>No extractable domains</b>}</div>

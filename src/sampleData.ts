@@ -1,6 +1,7 @@
 import type { Dataset } from './types'
 
 export const sampleData: Dataset = {
+  source: { kind: 'sample', label: 'Fictional fallback dataset' },
   target: {
     id: 'northstar',
     name: 'Northstar CRM',

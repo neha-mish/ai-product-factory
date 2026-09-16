@@ -142,6 +142,12 @@ input:focus, textarea:focus, select:focus { border-color: var(--ink); box-shadow
 .answer-input-card label { display: block; }
 .answer-input-card label input, .answer-input-card label textarea { margin-top: .45rem; font-weight: 400; }
 .answer-input-card > label { margin-top: .8rem; }
+.row-provenance { margin: .75rem 0 0; color: #66716d; font-size: .72rem; }
+.row-provenance a, .hero-note a, .evidence-provenance a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.import-warning { margin: 0 auto 2rem; max-width: 1180px; padding: 1rem 1.2rem; border: 1px solid #b78d49; background: #fff4d9; font-size: .82rem; }
+.evidence-provenance { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-bottom: 1rem; color: #66716d; font-size: .72rem; }
+.evidence-provenance a { display: inline-flex; align-items: center; gap: .35rem; }
+.evidence-provenance svg { width: 14px; }
 .analyze-button { margin-top: 1.5rem; width: 100%; }
 footer { padding: 3rem 4.5vw; background: var(--green); color: white; display: flex; justify-content: space-between; align-items: center; }
 .footer-brand { display: flex; gap: .8rem; align-items: center; }
