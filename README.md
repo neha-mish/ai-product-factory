@@ -1,49 +1,80 @@
-# AI Product Factory
+# AnswerLens · AI Product Factory
 
-AI Product Factory is an agent-native system for turning ambiguous AI product ideas into testable product decisions.
+AnswerLens is a four-to-five-hour product experiment that turns user-supplied AI answers into transparent brand-visibility observations.
 
-**Current stage: V0.1 — Foundation.** This repository establishes the operating contracts, specialist skills, durable knowledge model, human approval gates, and evaluation philosophy. It is not production-ready and does not yet include a recruiter-facing application.
+It answers a deliberately narrow question: **given this set of AI answers, where did the target brand appear, which competitors appeared first, which prompts exposed target-absent gaps, and which visible source domains were present?**
 
-## Current scope
+It does not produce a universal AEO score or claim to explain why a model included a brand.
 
-The current release focuses on the product-decision workflow: framing ambiguous ideas, challenging assumptions, defining evaluations, recording human approvals, and producing an EXPERIMENT, INVESTIGATE, or REJECT decision. Building production applications, recruiter-facing experiences, and runtime model integrations is outside the current scope.
+## Why this exists
 
-## What this demonstrates
+Raw answers from ChatGPT, Claude, Gemini, and similar tools are easy to collect but difficult to compare consistently. AnswerLens provides a deterministic **Observe → Diagnose** workflow:
 
-- **Agent orchestration:** bounded Discovery, Critic, Eval, and Product Review responsibilities with explicit handoffs.
-- **Context engineering:** concise operating instructions route agents to task-specific skills and durable documentation.
-- **Durable knowledge:** Markdown preserves decisions, product artifacts, and reusable learning outside chat history.
-- **Human-in-the-loop design:** humans approve the problem frame and evaluation contract before work advances.
-- **Evaluation-driven development:** observable success criteria and failure conditions are agreed before implementation.
-- **Holdout evaluation:** some scenarios remain sealed from builders to reduce optimization against known tests.
-- **AI-versus-deterministic judgment:** AI is used only where it adds value; published experiences must work without an LLM or paid API at runtime.
+1. Define a target brand, explicit aliases, and competitors.
+2. Supply prompts and observed AI answers.
+3. Calculate mention rate, first mention, prompt-level visibility gaps, and visible URL domains.
+4. Trace every aggregate result back to the original answer.
+5. Treat AEO/GEO outputs as investigation areas—not causes, prescriptions, or promised uplift.
 
-## Decision flow
+The longer-term product hypothesis is **Ask → Observe → Diagnose → Improve → Re-test**. Only Observe → Diagnose is implemented.
 
-```text
-Ambiguous AI product idea
-          ↓
-      Discovery
-          ↓
- Assumption challenge
-          ↓
-  Evaluation design
-          ↓
-    Product review
-          ↓
-EXPERIMENT | INVESTIGATE | REJECT
+## Try the prototype
+
+The app opens with a fictional sample dataset, so the complete experience is visible immediately. Select **Edit this dataset** to replace the brands, aliases, prompts, platforms, and answers. Analysis recomputes locally in the browser.
+
+No data is uploaded or persisted. No model API is called.
+
+## What is implemented
+
+- Case-insensitive, whole-term brand and alias matching
+- Overlap handling that prefers the most specific matching term
+- Per-brand mention rate, first-mention count, and total matches
+- Prompts where competitors appear while the target brand is absent
+- Visible HTTP(S) domain extraction and normalization
+- Source-level traceability for every result
+- Editable sample and custom input path
+- Explicit dataset and causal limitations
+- Responsive interface and focused automated tests
+
+## Deliberately not implemented
+
+- Live querying of AI platforms
+- Automatic competitor discovery
+- Authentication, accounts, storage, or tracking
+- Sentiment or semantic-positioning analysis
+- Composite AEO/GEO/visibility scoring
+- Model-generated summaries or content briefs
+- Causal recommendations or predicted visibility lift
+- Repeated experiments and change-over-time monitoring
+
+These omissions are product decisions, not unfinished promises. See the [approved evaluation contract](runs/2026-09-16-answerlens/evaluation-contract.md) and [assumption challenge](runs/2026-09-16-answerlens/assumption-challenge.md).
+
+## Run locally
+
+Requires a current Node.js release and npm.
+
+```bash
+npm install
+npm run dev
 ```
 
-Two human gates make the workflow intentionally non-automatic: the problem definition must be approved before solution development, and the evaluation contract must be approved before implementation or build.
+Open the local URL printed by Vite.
 
-## Repository guide
+## Test and build
 
-- [`AGENTS.md`](AGENTS.md) — operating contract and workflow map.
-- [`.agents/skills/`](.agents/skills/) — specialist instructions.
-- [`knowledge/wiki/`](knowledge/wiki/index.md) — durable, reusable knowledge.
-- [`runs/`](runs/README.md) — execution-specific evidence and outputs.
-- [`products/`](products/README.md) — durable product-concept artifacts promoted from runs.
-- [`ARCHITECTURE.md`](ARCHITECTURE.md) — boundaries, artifact lifecycle, and runtime constraints.
-- [`docs/decisions/`](docs/decisions/0001-agent-native-architecture.md) — architecture decision records.
+```bash
+npm test
+npm run build
+```
 
-Start with [`AGENTS.md`](AGENTS.md). Do not begin solution or UI development until the required gates are approved.
+The production build is written to `dist/`. `vercel.json` configures Vercel to run the same build.
+
+## Product evidence
+
+- [Problem frame](runs/2026-09-16-answerlens/problem-frame.md)
+- [Assumption challenge](runs/2026-09-16-answerlens/assumption-challenge.md)
+- [Evaluation contract](runs/2026-09-16-answerlens/evaluation-contract.md)
+- [Product review](runs/2026-09-16-answerlens/product-review.md)
+- [Architecture decision](docs/decisions/0002-deterministic-recruiter-prototype.md)
+
+The repository began as AI Product Factory: an agent-native workflow for turning ambiguous AI ideas into testable decisions. AnswerLens is its first bounded product experiment. The governing sequence remains Discovery → Critic → Eval → Product Review, with human approval gates before solution development and implementation. Start with [`AGENTS.md`](AGENTS.md) for the operating contract.
