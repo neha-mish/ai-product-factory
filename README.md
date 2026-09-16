@@ -2,6 +2,8 @@
 
 AnswerLens is a four-to-five-hour product experiment that turns user-supplied AI answers into transparent brand-visibility observations.
 
+**[Open the live prototype](https://answerlens-neha-mish.neha-mish87.chatgpt.site)**
+
 It answers a deliberately narrow question: **given this set of AI answers, where did the target brand appear, which competitors appeared first, which prompts exposed target-absent gaps, and which visible source domains were present?**
 
 It does not produce a universal AEO score or claim to explain why a model included a brand.
@@ -75,6 +77,7 @@ The production build is written to `dist/`. `vercel.json` configures Vercel to r
 - [Assumption challenge](runs/2026-09-16-answerlens/assumption-challenge.md)
 - [Evaluation contract](runs/2026-09-16-answerlens/evaluation-contract.md)
 - [Product review](runs/2026-09-16-answerlens/product-review.md)
+- [Evaluation result](runs/2026-09-16-answerlens/evaluation-result.md)
 - [Architecture decision](docs/decisions/0002-deterministic-recruiter-prototype.md)
 
 The repository began as AI Product Factory: an agent-native workflow for turning ambiguous AI ideas into testable decisions. AnswerLens is its first bounded product experiment. The governing sequence remains Discovery → Critic → Eval → Product Review, with human approval gates before solution development and implementation. Start with [`AGENTS.md`](AGENTS.md) for the operating contract.
